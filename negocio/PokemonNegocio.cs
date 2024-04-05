@@ -10,6 +10,44 @@ namespace negocio
 {
     public class PokemonNegocio
     {
+        public Pokemon buscarPorId(int id)
+        {
+            Pokemon poke = null;
+            AccesoDatos datos = new AccesoDatos();
+
+            try
+            {
+                datos.setearConsulta("SELECT P.Nombre, P.Descripcion, T.Id AS IdTipo, T.Descripcion as Tipo, D.Id AS IdDebilidad, D.Descripcion as Debilidad FROM POKEMONS P INNER JOIN ELEMENTOS T ON P.IdTipo = T.Id  INNER JOIN ELEMENTOS D ON P.IdDebilidad = D.Id WHERE P.Id = @id");
+                datos.setearParametro("@id", id);
+                datos.ejecutarLectura();
+
+                while (datos.Lector.Read())
+                {
+                    poke = new Pokemon();
+
+                    poke.Nombre = datos.Lector["Nombre"].ToString();
+                    poke.Descripcion = datos.Lector["Descripcion"].ToString();
+                
+                    poke.Tipo = new Elemento { Descripcion = datos.Lector["Tipo"].ToString() };
+            
+                    poke.Debilidad = new Elemento { Descripcion = datos.Lector["Debilidad"].ToString() };
+
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                throw;
+            }
+
+            finally
+            {
+                datos.cerrarConexion();
+            }
+
+            return poke;
+        }
 
         public List<Pokemon> listar()
         {
