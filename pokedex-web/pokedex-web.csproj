@@ -67,12 +67,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="FormularioPokemon.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="PokemonLista.aspx" />
     <Content Include="Web.config" />
     <Content Include="PokemonDetalles.aspx" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="FormularioPokemon.aspx.cs">
+      <DependentUpon>FormularioPokemon.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="FormularioPokemon.aspx.designer.cs">
+      <DependentUpon>FormularioPokemon.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Default.aspx.cs">
       <DependentUpon>Default.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

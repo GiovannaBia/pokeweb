@@ -3,8 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="ContentPlaceHolder1" runat="server">
             <h1>Bienvenidos a POKEWEB</h1>
-            <p>sjdjdiqiofjiewjfiep>
-
+        
             <div class="row row-cols-1 row-cols-md-3 g-4">
                 
                <asp:Repeater runat="server" id="repRepetidor">

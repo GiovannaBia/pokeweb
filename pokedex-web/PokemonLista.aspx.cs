@@ -17,5 +17,22 @@ namespace pokedex_web
             dgvPokemons.DataSource = negocio.listar();
             dgvPokemons.DataBind();
         }
+
+        protected void dgvPokemons_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var id = dgvPokemons.SelectedDataKey.Value.ToString();
+            Response.Redirect("FormularioPokemon.aspx?id=" + id);  //No lo tomare para agregar poke sino para modificar,
+        }                                        //luego en el back evaluo, si tengo id modifico, sino doy de alta!
+
+        protected void btnAgregar_Click(object sender, EventArgs e)
+        {
+            Response.Redirect("FormularioPokemon.aspx");
+        }
+
+        protected void dgvPokemons_PageIndexChanging(object sender, GridViewPageEventArgs e)
+        {
+            dgvPokemons.PageIndex = e.NewPageIndex;
+            dgvPokemons.DataBind();
+        }
     }
 }
