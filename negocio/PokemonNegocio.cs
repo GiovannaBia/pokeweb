@@ -27,9 +27,7 @@ namespace negocio
 
                     poke.Nombre = datos.Lector["Nombre"].ToString();
                     poke.Descripcion = datos.Lector["Descripcion"].ToString();
-                
                     poke.Tipo = new Elemento { Descripcion = datos.Lector["Tipo"].ToString() };
-            
                     poke.Debilidad = new Elemento { Descripcion = datos.Lector["Debilidad"].ToString() };
 
                 }
