@@ -13,7 +13,7 @@
                 <asp:BoundField HeaderText="Nombre" DataField="Nombre" />
                 <asp:BoundField HeaderText="Numero" DataField="Numero" />
                 <asp:BoundField HeaderText="Tipo" DataField="Tipo.Descripcion" />
-                <asp:CommandField ShowSelectButton="true" SelectText="✍️" HeaderText="Acción" />
+                <asp:CommandField ShowSelectButton="true" SelectText="✍️" HeaderText="Acción"   />
              </Columns>
         </asp:GridView>
         <asp:Button runat="server" CssClass="btn btn-primary" text="Agregar" id="btnAgregar" onclick="btnAgregar_Click"/>
