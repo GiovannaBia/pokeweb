@@ -11,8 +11,10 @@ namespace pokedex_web
 {
     public partial class AgregarPokemon : System.Web.UI.Page
     {
+        public bool ConfirmarEliminacion { get; set;  }
         protected void Page_Load(object sender, EventArgs e)
         {
+            ConfirmarEliminacion = false;
             txtId.Enabled = false;
 
             try
@@ -35,7 +37,7 @@ namespace pokedex_web
                 if (id != null && !IsPostBack)  //Quiere decir que vamos a modificar! 
                 {
                     PokemonNegocio negocio = new PokemonNegocio();
-                    List<Pokemon> lista = negocio.listar(Request.QueryString["id"].ToString());
+                    List<Pokemon> lista = negocio.listar((id));
                     Pokemon seleccionado = lista[0];
 
                     txtId.Text = seleccionado.Id.ToString();
@@ -96,5 +98,17 @@ namespace pokedex_web
         {
             UrlImagen.ImageUrl = txtUrlImagen.Text;
         }
+
+        protected void btnEliminar_Click (object sender, EventArgs e)
+        {
+            ConfirmarEliminacion = true;
+        }
+
+        protected void btnConfirmaEliminar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
+
+    
 }
