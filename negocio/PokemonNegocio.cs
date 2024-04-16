@@ -10,44 +10,43 @@ namespace negocio
 {
     public class PokemonNegocio
     {
-        public Pokemon buscarPorId(int id)
+
+        public Pokemon  buscarPorId(int id)
         {
-            Pokemon poke = null;
             AccesoDatos datos = new AccesoDatos();
+            Pokemon poke = new Pokemon();
 
             try
             {
-                datos.setearConsulta("SELECT P.Nombre, P.Descripcion, T.Id AS IdTipo, T.Descripcion as Tipo, D.Id AS IdDebilidad, D.Descripcion as Debilidad FROM POKEMONS P INNER JOIN ELEMENTOS T ON P.IdTipo = T.Id  INNER JOIN ELEMENTOS D ON P.IdDebilidad = D.Id WHERE P.Id = @id");
+                datos.setearConsulta("SELECT P.Nombre, P.Numero, P.Descripcion, P.UrlImagen, T.Id AS IdTipo, T.Descripcion as Tipo, D.Id AS IdDebilidad, D.Descripcion as Debilidad FROM POKEMONS P INNER JOIN ELEMENTOS T ON P.IdTipo = T.Id INNER JOIN ELEMENTOS D ON P.IdDebilidad = D.Id WHERE P.Id = @id");
                 datos.setearParametro("@id", id);
-                datos.ejecutarLectura();
 
                 while (datos.Lector.Read())
                 {
-                    poke = new Pokemon();
-
-                    poke.Nombre = datos.Lector["Nombre"].ToString();
-                    poke.Descripcion = datos.Lector["Descripcion"].ToString();
-                    poke.Tipo = new Elemento { Descripcion = datos.Lector["Tipo"].ToString() };
-                    poke.Debilidad = new Elemento { Descripcion = datos.Lector["Debilidad"].ToString() };
+                   poke.Id = int.Parse(datos.Lector["Id"].ToString());
+                   poke.Numero = int.Parse(datos.Lector["Numero"].ToString());
+                   poke.Nombre = datos.Lector["Nombre"].ToString();
+                   poke.Descripcion = datos.Lector["Descripcion"].ToString();
+                   poke.UrlImagen = datos.Lector["UrlImagen"].ToString();
+                   poke.Tipo.Descripcion = datos.Lector["Tipo"].ToString();
+                   poke.Debilidad.Descripcion = datos.Lector["Debilidad"].ToString();
+                 
 
                 }
-
             }
             catch (Exception ex)
             {
-                throw ex;
-                throw;
-            }
 
+                throw ex;
+            }
             finally
             {
                 datos.cerrarConexion();
             }
-
             return poke;
         }
 
-        public List<Pokemon> listar()
+        public List<Pokemon> listar(string id = "")
         {
             List<Pokemon> lista = new List<Pokemon>();
             SqlConnection conexion = new SqlConnection();
@@ -58,7 +57,28 @@ namespace negocio
             {
                 conexion.ConnectionString = "server=.\\SQLEXPRESS; database=POKEDEX_DB; integrated security=true";
                 comando.CommandType = System.Data.CommandType.Text;
-                comando.CommandText = "Select Numero, Nombre, P.Descripcion, UrlImagen, E.Descripcion Tipo, D.Descripcion Debilidad, P.IdTipo, P.IdDebilidad, P.Id From POKEMONS P, ELEMENTOS E, ELEMENTOS D Where E.Id = P.IdTipo And D.Id = P.IdDebilidad And P.Activo = 1";
+                comando.CommandText = @"
+                    Select
+                        P.Numero, 
+                        P.Nombre, 
+                        P.Descripcion, 
+                        P.UrlImagen, 
+                        Tipo.Descripcion as Tipo, 
+                        Debilidad.Descripcion as Debilidad, 
+                        P.IdTipo, 
+                        P.IdDebilidad, 
+                        P.Id
+                    From
+                        POKEMONS P
+                        Inner Join ELEMENTOS Tipo On Tipo.Id = P.IdTipo
+                        Inner Join ELEMENTOS Debilidad On Debilidad.Id = P.IdDebilidad
+                    Where
+                        P.Activo = 1 ";
+ 
+                if (id != "")
+                {
+                    comando.CommandText += " AND P.Id = " + id;
+                }
                 comando.Connection = conexion;
 
                 conexion.Open();
@@ -95,7 +115,33 @@ namespace negocio
                 throw ex;
             }
 
-        } 
+        }
+
+        public void modificarConSP(Pokemon poke)
+        {
+            AccesoDatos datos = new AccesoDatos();
+            try
+            {
+                datos.setearProcedimiento("storedModificarPokemon");
+                datos.setearParametro("@numero", poke.Numero);
+                datos.setearParametro("@nombre", poke.Nombre);
+                datos.setearParametro("@desc", poke.Descripcion);
+                datos.setearParametro("@img", poke.UrlImagen);
+                datos.setearParametro("@idTipo", poke.Tipo.Id);
+                datos.setearParametro("@idDebilidad", poke.Debilidad.Id);
+                datos.setearParametro("@id", poke.Id);
+
+                datos.ejecutarAccion();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            finally
+            {
+                datos.cerrarConexion();
+            }
+        }
 
         public List<Pokemon> listarConSP()
         {
