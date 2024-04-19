@@ -67,15 +67,14 @@ namespace negocio
                         Debilidad.Descripcion as Debilidad, 
                         P.IdTipo, 
                         P.IdDebilidad, 
-                        P.Id
+                        P.Id,
+                        P.Activo
                     From
                         POKEMONS P
                         Inner Join ELEMENTOS Tipo On Tipo.Id = P.IdTipo
-                        Inner Join ELEMENTOS Debilidad On Debilidad.Id = P.IdDebilidad
-                    Where
-                        P.Activo = 1 ";
+                        Inner Join ELEMENTOS Debilidad On Debilidad.Id = P.IdDebilidad ";
  
-                if (id != "")
+                if (id != " ")
                 {
                     comando.CommandText += " AND P.Id = " + id;
                 }
@@ -103,6 +102,7 @@ namespace negocio
                     aux.Debilidad = new Elemento();
                     aux.Debilidad.Id = (int)lector["IdDebilidad"];
                     aux.Debilidad.Descripcion = (string)lector["Debilidad"];
+                    aux.Activo = bool.Parse(lector["Activo"].ToString());
 
                     lista.Add(aux);
                 }
@@ -167,6 +167,7 @@ namespace negocio
                     aux.Debilidad = new Elemento();
                     aux.Debilidad.Id = (int)datos.Lector["IdDebilidad"];
                     aux.Debilidad.Descripcion = (string)datos.Lector["Debilidad"];
+                    aux.Activo = bool.Parse(datos.Lector["Activo"].ToString());  //Para eliminacion logica o inactivacion y reactivacion
 
                     lista.Add(aux);
                 }
@@ -352,13 +353,14 @@ namespace negocio
             }
         }
 
-        public void eliminarLogico(int id)
+        public void eliminarLogico(int id, bool activo = false) //por defecto le mandamos inactivo, si está activo manda true
         {
             try
             {
                 AccesoDatos datos = new AccesoDatos();
-                datos.setearConsulta("update POKEMONS set Activo = 0 Where id = @id");
+                datos.setearConsulta("update POKEMONS set Activo = @activo Where id = @id");
                 datos.setearParametro("@id", id);
+                datos.setearParametro("activo", activo); //si esta inactivo, osea false, cuando llamo al metodo le va a setear activo y al reves
                 datos.ejecutarAccion();
             }
             catch (Exception ex)

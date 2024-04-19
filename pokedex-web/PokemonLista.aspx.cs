@@ -14,7 +14,7 @@ namespace pokedex_web
         protected void Page_Load(object sender, EventArgs e)
         {
             PokemonNegocio negocio = new PokemonNegocio();
-            dgvPokemons.DataSource = negocio.listar();
+            dgvPokemons.DataSource = negocio.listarConSP();
             dgvPokemons.DataBind();
         }
 
