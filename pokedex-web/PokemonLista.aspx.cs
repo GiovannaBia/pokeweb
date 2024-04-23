@@ -44,5 +44,20 @@ namespace pokedex_web
             dgvPokemons.DataSource = listaFitrada;
             dgvPokemons.DataBind();
         }
+
+        protected void chkAvanzado_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void ddlCampo_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        protected void btnBuscar_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }
