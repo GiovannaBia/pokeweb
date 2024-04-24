@@ -20,7 +20,7 @@
                         <asp:CheckBox Text="Filtro avanzado" runat="server" AutoPostBack="true" ID="chkAvanzado" OnCheckedChanged="chkAvanzado_CheckedChanged" />
                     </div>
                 </div>
-                <% if (chkAvanzado.Checked)
+                <% if (FiltroAvanzado)
                     { %>
                 <div class="row">
                     <div class="col-3">
