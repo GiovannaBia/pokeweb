@@ -15,6 +15,9 @@ namespace negocio
         {
             AccesoDatos datos = new AccesoDatos();
             Pokemon poke = new Pokemon();
+            poke.Tipo = new Elemento();
+            poke.Debilidad = new Elemento();
+
 
             try
             {

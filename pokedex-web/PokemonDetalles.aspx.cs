@@ -15,7 +15,7 @@ namespace pokedex_web
         {
             if (!IsPostBack)
             {
-                int id = int.Parse(Request.QueryString["id"]);
+                int id = int.Parse(Request.QueryString["Id"]);
 
                 PokemonNegocio negocio = new PokemonNegocio();
                 Pokemon poke = negocio.buscarPorId(id);
