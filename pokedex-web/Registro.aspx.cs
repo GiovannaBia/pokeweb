@@ -22,14 +22,12 @@ namespace pokedex_web
             {
                 Trainee user = new Trainee();
                 TraineeNegocio traineeNegocio = new TraineeNegocio();
-                EmailService emailService = new EmailService();
+            
                 user.Email = txtEmail.Text;
                 user.Pass = txtPass.Text;
                 user.Id = traineeNegocio.insertarNuevo(user);
                 Session.Add("trainee", user); //esto me mantiene la sesion abierta, para ir de pag en pag
 
-                emailService.armarCorreo(user.Email, "Bienvenida Trainee", "Hola, te damos la bienvenida a la aplicacion");
-                emailService.enviarMail();
                 Response.Redirect("Default.aspx", false);
            
 

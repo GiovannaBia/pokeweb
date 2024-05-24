@@ -69,6 +69,7 @@
   <ItemGroup>
     <Content Include="Email.aspx" />
     <Content Include="Error.aspx" />
+    <Content Include="Favoritos.aspx" />
     <Content Include="FormularioPokemon.aspx" />
     <Content Include="Default.aspx" />
     <Content Include="Login.aspx" />
@@ -96,6 +97,13 @@
     </Compile>
     <Compile Include="Error.aspx.designer.cs">
       <DependentUpon>Error.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Favoritos.aspx.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Favoritos.aspx.designer.cs">
+      <DependentUpon>Favoritos.aspx</DependentUpon>
     </Compile>
     <Compile Include="FormularioPokemon.aspx.cs">
       <DependentUpon>FormularioPokemon.aspx</DependentUpon>
@@ -202,6 +210,9 @@
       <Project>{974d539c-098c-4e52-89fb-7b433f91dc0c}</Project>
       <Name>negocio</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Images\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
