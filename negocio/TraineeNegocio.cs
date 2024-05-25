@@ -79,7 +79,7 @@ namespace negocio
             {
                 datos.setearConsulta("update USERS set email = @email, nombre = @nombre, apellido = @apellido, fechaNacimiento = @fechaNacimiento, imagenPerfil = @imagenPerfil Where id = @id");
          
-                datos.setearParametro("@imagenPerfil", user.ImagenPerfil);
+                datos.setearParametro("@imagenPerfil", (object)user.ImagenPerfil ?? DBNull.Value);
                 datos.setearParametro("@email", user.Email);
                 datos.setearParametro("@nombre", user.Nombre);
                 datos.setearParametro("@apellido", user.Apellido);

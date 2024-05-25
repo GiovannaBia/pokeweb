@@ -60,8 +60,8 @@ namespace pokedex_web
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
-                throw ex;
+                Session.Add("error", ex.ToString());               
+                Response.Redirect("Error.aspx", false);
             }
 
             
@@ -97,8 +97,8 @@ namespace pokedex_web
             }
             catch (Exception ex)
             {
-                Session.Add("Error", ex);
-                throw;
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
 
@@ -130,7 +130,8 @@ namespace pokedex_web
             }
             catch (Exception ex)
             {
-                Session.Add("error", ex);
+                Session.Add("error", ex.ToString());
+                Response.Redirect("Error.aspx", false);
             }
         }
     }
