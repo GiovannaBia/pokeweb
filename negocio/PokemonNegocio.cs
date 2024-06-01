@@ -21,7 +21,7 @@ namespace negocio
 
             try
             {
-                datos.setearConsulta("SELECT P.Nombre, P.Numero, P.Descripcion, P.UrlImagen, T.Id AS IdTipo, T.Descripcion as Tipo, D.Id AS IdDebilidad, D.Descripcion as Debilidad FROM POKEMONS P INNER JOIN ELEMENTOS T ON P.IdTipo = T.Id INNER JOIN ELEMENTOS D ON P.IdDebilidad = D.Id WHERE P.Id = @id");
+                datos.setearConsulta("SELECT P.Id, P.Nombre, P.Numero, P.Descripcion, P.UrlImagen, T.Id AS IdTipo, T.Descripcion as Tipo, D.Id AS IdDebilidad, D.Descripcion as Debilidad FROM POKEMONS P INNER JOIN ELEMENTOS T ON P.IdTipo = T.Id INNER JOIN ELEMENTOS D ON P.IdDebilidad = D.Id WHERE P.Id = @id");
                 datos.setearParametro("@id", id);
 
                 while (datos.Lector.Read())
@@ -77,7 +77,7 @@ namespace negocio
                         Inner Join ELEMENTOS Tipo On Tipo.Id = P.IdTipo
                         Inner Join ELEMENTOS Debilidad On Debilidad.Id = P.IdDebilidad ";
  
-                if (id != " ")
+                if (id != "")
                 {
                     comando.CommandText += " AND P.Id = " + id;
                 }

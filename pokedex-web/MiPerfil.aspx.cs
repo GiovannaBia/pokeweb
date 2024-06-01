@@ -13,10 +13,15 @@ namespace pokedex_web
         {
             if (!IsPostBack)
             {
+                txtFechaNacimiento.Text = DateTime.Now.ToString("yyyy-MM-dd");
+                txtFechaNacimiento.Attributes["min"] = "1700-01-01";
+                txtFechaNacimiento.Attributes["max"] = DateTime.Now.ToString("yyyy-MM-dd");
+
                 if (Seguridad.sesionActiva(Session["trainee"]))
                 {
                     Trainee user = (Trainee)Session["trainee"];
                     txtEmail.Text = user.Email;
+                    txtEmail.ReadOnly = true;
                     txtNombre.Text = user.Nombre;
                     txtApellido.Text = user.Apellido;
                     imgNuevoPerfil.ImageUrl = "~/Images/" + user.ImagenPerfil;
@@ -26,11 +31,7 @@ namespace pokedex_web
                 {
                     Response.Redirect("LoginPagina.aspx", false);
                 }
-                
-
-               
-              
-              
+                         
             }
         }
 
@@ -38,6 +39,10 @@ namespace pokedex_web
         {
             try
             {
+                Page.Validate();
+                if (!Page.IsValid)
+                    return;
+
                 TraineeNegocio negocio = new TraineeNegocio();
                
                 Trainee user = (Trainee)Session["trainee"];
@@ -52,9 +57,28 @@ namespace pokedex_web
                 user.Nombre = txtNombre.Text;
                 user.Apellido = txtApellido.Text;
                 user.Email = txtEmail.Text;
-                user.FechaNacimiento = DateTime.Parse(txtFechaNacimiento.Text);
+              
 
-                negocio.Actualizar(user);
+                if (hdnDateInteracted.Value == "true")
+                {
+                    DateTime selectedDate;
+
+                    if (DateTime.TryParse(txtFechaNacimiento.Text, out selectedDate))
+                    {
+                        //Valido los rangos
+                        DateTime minDate = new DateTime(2023, 1, 1);
+                        DateTime maxDate = new DateTime(2023, 12, 31);
+
+                        if (selectedDate < minDate || selectedDate > maxDate)
+                        {
+                            lblMessage.Visible = true;
+                            lblMessage.Text = "La fecha seleccionada está fuera del rango permitido.";
+                            return;
+                        }
+                        user.FechaNacimiento = selectedDate;
+                    }
+                }       
+                 negocio.Actualizar(user);
 
                 // Verificar que la master page no sea nula
                 if (Master != null)

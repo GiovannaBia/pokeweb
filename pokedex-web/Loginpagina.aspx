@@ -6,10 +6,10 @@
        <br />
     <h1>Login</h1>
     <asp:Label Text="Email" runat="server" Font-Size="Larger" Font-Bold="true" />
-    <asp:TextBox runat="server" Id="txtEmail" CssClass="form-control" />
+    <asp:TextBox runat="server"  Id="txtEmail" CssClass="form-control" />
     <br />
      <asp:Label Text="Password" runat="server" Font-Size="Larger" Font-Bold="true" />
-    <asp:TextBox runat="server" ID="txtPass" CssClass="form-control" />
+    <asp:TextBox runat="server"  ID="txtPass" CssClass="form-control" />
     <br />
     <asp:Button ID="btnIngresar" runat="server" Text="Ingresar"  CssClass="btn btn-primary" OnClick="btnIngresar_Click" />
     <a href="Default.aspx">Cancelar</a>
